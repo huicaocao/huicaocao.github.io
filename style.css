@@ -1,33 +1,43 @@
 body {
+    /* 设置背景图片 */
+    background-image: url('https://bear-images.sfo2.cdn.digitaloceanspaces.com/huiye/-34.webp');
+    background-size: cover; /* 覆盖整个视口 */
+    background-repeat: no-repeat; /* 不重复 */
+    background-position: center center; /* 图片居中 */
+    background-attachment: fixed; /* 背景图片固定，不随滚动条滚动 */
+
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start; /* 将内容推到左边 */
+    align-items: center; /* 垂直居中 */
     min-height: 100vh;
     margin: 0;
-    background-color: #f0f2f5; /* 浅灰色背景 */
-    color: #333;
+    padding-left: 5%; /* 给左侧留出一些边距，避免贴边 */
+    color: #333; /* 默认文本颜色，确保可读性 */
     text-align: center;
 }
 
 .container {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.85); /* 半透明白色背景，让背景图透出，同时保证内容可读 */
     padding: 30px 40px;
     border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 稍微强一点的阴影，突出容器 */
     max-width: 500px;
     width: 90%;
+    /* 确保容器在左侧有足够的空间 */
+    margin-right: auto; /* 自动右边距，配合flex-start将容器推到左边 */
 }
 
 h1 {
-    color: #4a4a4a;
+    color: #6F4E37; /* 深棕色标题 */
     margin-bottom: 25px;
-    font-size: 2em;
+    font-size: 2.2em; /* 稍微大一点的标题 */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* 添加一点文本阴影 */
 }
 
 .card-display {
     margin-bottom: 30px;
-    min-height: 350px; /* 确保有足够的空间显示卡牌和文字 */
+    min-height: 350px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,48 +45,49 @@ h1 {
 }
 
 .card-image {
-    max-width: 180px; /* 调整卡牌图片大小 */
+    max-width: 200px; /* 调整卡牌图片大小，可以根据需要调整 */
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease-in-out; /* 添加动画效果 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* 稍微强一点的卡牌阴影 */
+    transition: transform 0.3s ease-in-out;
 }
 
 .card-image:hover {
-    transform: scale(1.03);
+    transform: scale(1.05); /* 悬停时放大更多 */
 }
 
 .card-name {
-    font-size: 1.5em;
+    font-size: 1.6em; /* 稍微大一点的牌名 */
     font-weight: bold;
     margin-top: 20px;
-    color: #6a0dad; /* 紫色 */
+    color: #6F4E37; /* 深棕色牌名 */
 }
 
 .card-meaning {
-    font-size: 1.1em;
+    font-size: 1.15em; /* 稍微大一点的牌义 */
     line-height: 1.6;
-    color: #555;
+    color: #555; /* 牌义文本颜色 */
     margin-top: 10px;
 }
 
 button {
-    background-color: #6a0dad; /* 紫色按钮 */
+    background-color: #6F4E37; /* 深棕色按钮 */
     color: white;
-    padding: 12px 25px;
+    padding: 14px 30px; /* 按钮更大一些 */
     border: none;
     border-radius: 8px;
-    font-size: 1.1em;
+    font-size: 1.2em; /* 按钮文字更大 */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 button:hover {
-    background-color: #51078a; /* 鼠标悬停时颜色变深 */
-    transform: translateY(-2px);
+    background-color: #5A3F2C; /* 鼠标悬停时颜色变深 */
+    transform: translateY(-3px); /* 悬停时向上浮动更多 */
 }
 
 button:active {
     transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 点击时阴影变小 */
 }

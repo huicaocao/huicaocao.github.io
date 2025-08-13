@@ -1,11 +1,8 @@
-// 塔罗牌数据（示例，您可以根据需要添加更多牌或更详细的解释）
-// 建议您找一个完整的塔罗牌列表，包含牌名、图片文件名和简要牌义。
+// 塔罗牌数据，现在只包含您提供的三张牌
 const tarotCards = [
-    { name: "女祭司", image: "priestess.png", meaning: "魔盒之心。" },
-    { name: "战车", image: "chariot.png", meaning: "旧日追索。" },
-    { name: "权杖四", image: "Four of Wands.png", meaning: "家园，阿瓦隆之地。" },
-    // ... 添加所有78张塔罗牌的数据
-    // 确保 'image' 字段对应您 'images/' 文件夹中的实际图片文件名
+    { name: "战车", image: "https://bear-images.sfo2.cdn.digitaloceanspaces.com/huiye/chariot.webp", meaning: "旧日追索。" },
+    { name: "权杖四", image: "https://bear-images.sfo2.cdn.digitaloceanspaces.com/huiye/four-of-wands.webp", meaning: "家园，阿瓦隆之地。" },
+    { name: "女祭司", image: "https://bear-images.sfo2.cdn.digitaloceanspaces.com/huiye/priestess.webp", meaning: "魔盒之心。" },
 ];
 
 const tarotCardImage = document.getElementById('tarotCardImage');
@@ -13,8 +10,7 @@ const cardName = document.getElementById('cardName');
 const cardMeaning = document.getElementById('cardMeaning');
 const drawCardButton = document.getElementById('drawCardButton');
 
-// 存储已抽取的牌，防止重复抽取（如果需要）
-let drawnCards = [];
+let drawnCards = []; // 用于存储已抽取的牌，防止重复
 
 function drawRandomCard() {
     // 如果所有牌都已抽取，可以重置或提示
@@ -23,9 +19,16 @@ function drawRandomCard() {
         drawnCards = []; // 重置牌组
     }
 
+    // 过滤掉已抽取的牌，只从剩余的牌中选择
     let availableCards = tarotCards.filter(card => !drawnCards.includes(card));
     
-    // 随机选择一张未抽取的牌
+    // 如果没有可用的牌（理论上在上面的重置逻辑后不应该发生，但作为安全检查）
+    if (availableCards.length === 0) {
+        cardName.textContent = "没有可抽取的牌了！";
+        cardMeaning.textContent = "请确保您的塔罗牌数据已正确配置。";
+        return;
+    }
+
     const randomIndex = Math.floor(Math.random() * availableCards.length);
     const selectedCard = availableCards[randomIndex];
 
@@ -33,7 +36,7 @@ function drawRandomCard() {
     drawnCards.push(selectedCard);
 
     // 更新页面显示
-    tarotCardImage.src = `images/${selectedCard.image}`;
+    tarotCardImage.src = selectedCard.image; // 直接使用图床URL
     tarotCardImage.alt = selectedCard.name;
     cardName.textContent = selectedCard.name;
     cardMeaning.textContent = selectedCard.meaning;
@@ -44,7 +47,8 @@ drawCardButton.addEventListener('click', drawRandomCard);
 
 // 页面加载时显示牌背
 window.onload = () => {
-    tarotCardImage.src = "images/back.png"; // 确保您有一张名为 back.jpg 的牌背图片
+    // 初始显示牌背图片和提示文字
+    tarotCardImage.src = "https://bear-images.sfo2.cdn.digitaloceanspaces.com/huiye/back.webp"; // 您的牌背图床地址
     tarotCardImage.alt = "塔罗牌背面";
     cardName.textContent = "点击按钮抽取一张牌";
     cardMeaning.textContent = "";
