@@ -1,0 +1,82 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f2f5; /* 浅灰色背景 */
+    color: #333;
+    text-align: center;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+}
+
+h1 {
+    color: #4a4a4a;
+    margin-bottom: 25px;
+    font-size: 2em;
+}
+
+.card-display {
+    margin-bottom: 30px;
+    min-height: 350px; /* 确保有足够的空间显示卡牌和文字 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-image {
+    max-width: 180px; /* 调整卡牌图片大小 */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out; /* 添加动画效果 */
+}
+
+.card-image:hover {
+    transform: scale(1.03);
+}
+
+.card-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #6a0dad; /* 紫色 */
+}
+
+.card-meaning {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #555;
+    margin-top: 10px;
+}
+
+button {
+    background-color: #6a0dad; /* 紫色按钮 */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #51078a; /* 鼠标悬停时颜色变深 */
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
