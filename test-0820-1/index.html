@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏玩家状态提交</title>
+    <!-- 引入Supabase客户端库 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .link a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>游戏玩家状态提交</h1>
+        <form id="statusForm">
+            <div class="form-group">
+                <label for="gameId">游戏ID (8位数字)</label>
+                <input type="text" id="gameId" name="gameId" placeholder="请输入8位数字游戏ID" maxlength="8">
+                <div class="error" id="gameIdError">请输入正确的8位数字游戏ID</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="status">状态</label>
+                <select id="status" name="status">
+                    <option value="">请选择状态</option>
+                    <option value="魔潮帮帮！">魔潮帮帮！</option>
+                    <option value="来我家园玩~">来我家园玩~</option>
+                    <option value="蹲蹲亲友&同好">蹲蹲亲友&同好</option>
+                </select>
+                <div class="error" id="statusError">请选择状态</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="nickname">昵称</label>
+                <input type="text" id="nickname" name="nickname" placeholder="请输入你的昵称">
+                <div class="error" id="nicknameError">请输入昵称</div>
+            </div>
+            
+            <button type="submit">提交</button>
+        </form>
+        
+        <div class="link">
+            <a href="view.html">查看所有玩家状态</a>
+        </div>
+    </div>
+    
+    <!-- 引入Supabase配置 -->
+    <script src="supabase-config.js"></script>
+    <script src="supabase-api.js"></script>
+    
+    <!-- 引入主脚本 -->
+    <script src="script.js"></script>
+</body>
+</html>
