@@ -1,6 +1,11 @@
 let stars = [];
 let auroraParticles = [];
 const PARTICLE_COUNT = 500; 
+let bgMusic;
+
+function preload() {
+  bgMusic = loadSound('https://bear-images.sfo2.cdn.digitaloceanspaces.com/huiye/-25.mp3');
+}
 
 function setup() {
   createCanvas(800, 800);
@@ -30,6 +35,12 @@ function draw() {
   drawGoldenStar(width / 2, height * 0.75, 20);
 
   drawMouseStar();
+}
+
+function mousePressed() {
+  if (bgMusic && !bgMusic.isPlaying()) {
+    bgMusic.loop();
+  }
 }
 
 function drawHighContrastBackground() {
