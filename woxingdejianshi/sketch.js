@@ -71,7 +71,6 @@ class TextParticle {
     this.ay += noiseY;
   }
   
-  // 更新位置
   update() {
     this.vx += this.ax;
     this.vy += this.ay;
@@ -189,7 +188,6 @@ class Arrow {
       this.x += this.vx;
       this.y += this.vy;
       
-      // 检查是否到达目标位置或超出边界
       let d = dist(this.x, this.y, this.targetX, this.targetY);
       if (d < 10 || 
           this.x < -100 || this.x > width + 100 || 
@@ -215,11 +213,10 @@ class Arrow {
       stroke(this.color.shaft[0], this.color.shaft[1], this.color.shaft[2], 200);
       line(0, 0, this.length, 0);
       
-      // 绘制箭尾羽毛
+      // 绘制箭尾
       strokeWeight(2);
       stroke(this.color.fletching[0], this.color.fletching[1], this.color.fletching[2], 200);
       
-      // 三根羽毛
       for (let i = 0; i < 3; i++) {
         let angleOffset = (i - 1) * 0.3;
         let featherLength = 10;
@@ -255,7 +252,7 @@ class Arrow {
   }
 }
 
-// 箭矢击中效果类
+// 箭矢击中效果
 class ArrowHitEffect {
   constructor(x, y) {
     this.x = x;
@@ -306,7 +303,6 @@ class ArrowHitEffect {
   }
 }
 
-// 四角星星类（作为鼠标光标）
 class FourPointStar {
   constructor() {
     this.x = 0;
@@ -332,7 +328,6 @@ class FourPointStar {
       this.pulseDirection *= -1;
     }
     
-    // 鼠标移动时增加光晕效果
     if (mouseIsPressed) {
       this.haloAlpha = lerp(this.haloAlpha, 100, 0.1);
       this.haloSize = lerp(this.haloSize, 50, 0.1);
@@ -343,7 +338,6 @@ class FourPointStar {
   }
   
   display() {
-    // 显示光晕
     if (this.haloAlpha > 5) {
       push();
       noFill();
@@ -359,7 +353,6 @@ class FourPointStar {
     
     let currentSize = this.size * (1 + this.pulse * 0.2);
     
-    // 绘制四角星星
     fill(this.color[0], this.color[1], this.color[2], 220);
     noStroke();
     
@@ -377,11 +370,9 @@ class FourPointStar {
       pop();
     }
     
-    // 绘制中心圆点
     fill(255, 230, 100, 200);
     ellipse(0, 0, currentSize * 0.3, currentSize * 0.3);
     
-    // 绘制中心亮点
     fill(255, 255, 200);
     ellipse(0, 0, currentSize * 0.15, currentSize * 0.15);
     
@@ -389,7 +380,6 @@ class FourPointStar {
   }
 }
 
-// 交互管理器
 class InteractionManager {
   constructor() {
     this.mouseTrail = [];
@@ -401,13 +391,11 @@ class InteractionManager {
   }
   
   update() {
-    // 更新鼠标轨迹
     this.mouseTrail.push({x: mouseX, y: mouseY});
     if (this.mouseTrail.length > this.maxTrailLength) {
       this.mouseTrail.shift();
     }
     
-    // 更新粒子
     for (let i = this.particles.length - 1; i >= 0; i--) {
       this.particles[i].lifetime--;
       if (this.particles[i].lifetime <= 0) {
@@ -421,7 +409,6 @@ class InteractionManager {
   }
   
   display() {
-    // 显示鼠标轨迹
     for (let i = 0; i < this.mouseTrail.length; i++) {
       let alpha = map(i, 0, this.mouseTrail.length, 10, 60);
       let size = map(i, 0, this.mouseTrail.length, 1, 6);
@@ -433,7 +420,6 @@ class InteractionManager {
       pop();
     }
     
-    // 显示粒子
     for (let particle of this.particles) {
       push();
       noStroke();
@@ -445,7 +431,7 @@ class InteractionManager {
   }
 }
 
-// 音乐管理器
+// 音乐
 class MusicManager {
   constructor() {
     this.musicUrl = "https://bear-images.sfo2.cdn.digitaloceanspaces.com/huiye/-27.mp3";
@@ -458,15 +444,14 @@ class MusicManager {
   }
   
   preload() {
-    // 预加载音乐
-    console.log("开始加载背景音乐...");
+    console.log("在此刻...");
     this.music = loadSound(this.musicUrl, 
       () => {
-        console.log("背景音乐加载成功");
+        console.log("启程！");
         this.setupMusic();
       },
       (err) => {
-        console.error("背景音乐加载失败:", err);
+        console.error("请等待，旅人:", err);
         this.loadAttempts++;
         if (this.loadAttempts < this.maxLoadAttempts) {
           console.log(`第${this.loadAttempts}次重试加载...`);
@@ -481,7 +466,7 @@ class MusicManager {
       this.music.setVolume(this.volume);
       this.music.loop();
       this.isPlaying = true;
-      console.log("背景音乐开始循环播放");
+      console.log("此刻苦旅");
     }
   }
   
@@ -516,7 +501,7 @@ class MusicManager {
   }
 }
 
-// 全局变量
+// 变量
 let textParticles = [];
 let interactionManager;
 let fourPointStar;
@@ -538,8 +523,7 @@ function preload() {
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
   
-  // 设置文字样式 - 改进的字体设置
-  // 尝试多种宋体字体名称，确保至少有一种能工作
+  // 中文字体如果不可选、返回下列
   let fontList = [
     'SimSun',           // Windows 宋体
     'NSimSun',          // Windows 新宋体
@@ -550,7 +534,6 @@ function setup() {
     'serif'             // 最后的回退
   ];
   
-  // 尝试设置字体
   let fontSet = false;
   for (let fontName of fontList) {
     try {
@@ -569,20 +552,15 @@ function setup() {
   
   textAlign(CENTER, CENTER);
   
-  // 创建交互管理器
   interactionManager = new InteractionManager();
   
-  // 创建四角星星光标
   fourPointStar = new FourPointStar();
   
-  // 创建文字粒子
   createTextParticles();
   
-  // 隐藏系统光标
   noCursor();
   
-  // 添加点击开始交互的提示
-  console.log("点击画布开始交互和播放音乐");
+  console.log("白羊、白鸽");
 }
 
 function createTextParticles() {
@@ -596,15 +574,13 @@ function createTextParticles() {
     let line = lines[lineIndex];
     let lineY = startY + lineIndex * lineHeight;
     
-    // 临时创建一个文本元素来测量实际宽度
     let tempSize = 20;
     let charWidth;
     
-    // 根据字符类型设置不同宽度
     if (isChineseChar(line.charAt(0))) {
-      charWidth = 22; // 中文字符通常更宽
+      charWidth = 22; 
     } else {
-      charWidth = 12; // 英文字符和标点
+      charWidth = 12; 
     }
     
     let lineWidth = line.length * charWidth;
@@ -615,7 +591,6 @@ function createTextParticles() {
       let x = startX + i * charWidth;
       let particle = new TextParticle(x, lineY, char);
       
-      // 根据字符类型调整大小
       if (char === ' ') {
         particle.size = 10;
         particle.color = 100;
@@ -648,7 +623,6 @@ function createArrowHitEffect(x, y) {
 }
 
 function draw() {
-  // 渐变背景
   for (let i = 0; i <= height; i++) {
     let inter = map(i, 0, height, 0, 1);
     let c = lerpColor(color(250, 245, 235), color(240, 235, 225), inter);
@@ -656,16 +630,12 @@ function draw() {
     line(0, i, width, i);
   }
   
-  // 更新风力
   windStrength = lerp(windStrength, targetWindStrength, 0.1);
   
-  // 更新交互管理器
   interactionManager.update();
   
-  // 更新四角星星
   fourPointStar.update();
   
-  // 更新和显示文字粒子
   for (let particle of textParticles) {
     particle.checkHover(mouseX, mouseY);
     particle.applyWind(mouseX, mouseY, windStrength);
@@ -673,7 +643,6 @@ function draw() {
     particle.display();
   }
   
-  // 更新和显示箭矢
   for (let i = arrows.length - 1; i >= 0; i--) {
     arrows[i].update();
     arrows[i].display();
@@ -683,7 +652,6 @@ function draw() {
     }
   }
   
-  // 更新和显示击中效果
   for (let i = arrowHitEffects.length - 1; i >= 0; i--) {
     arrowHitEffects[i].update();
     arrowHitEffects[i].display();
@@ -693,13 +661,10 @@ function draw() {
     }
   }
   
-  // 显示交互效果
   interactionManager.display();
   
-  // 显示四角星星（作为光标）
   fourPointStar.display();
   
-  // 绘制连接线
   stroke(180, 160, 140, 40);
   strokeWeight(0.8);
   
@@ -718,14 +683,13 @@ function draw() {
     }
   }
   
-  // 显示音乐状态提示（仅在音乐未开始时显示）
   if (musicManager.music && !musicManager.hasStarted) {
     push();
     fill(100, 80, 60, 180);
     noStroke();
     textSize(16);
     textAlign(CENTER);
-    text("点击画布开始交互和播放音乐", width/2, height - 40);
+    text("白羊、白鸽", width/2, height - 40);
     pop();
   }
 }
@@ -733,7 +697,6 @@ function draw() {
 function mouseMoved() {
   targetWindStrength = 2;
   
-  // 鼠标移动时开始播放音乐（如果还没开始）
   if (!musicManager.hasStarted && musicManager.music) {
     musicManager.play();
     musicManager.hasStarted = true;
@@ -749,13 +712,11 @@ function mouseReleased() {
 }
 
 function mousePressed() {
-  // 点击时开始播放音乐（如果还没开始）
   if (!musicManager.hasStarted && musicManager.music) {
     musicManager.play();
     musicManager.hasStarted = true;
   }
   
-  // 创建箭矢从随机位置射向鼠标点击位置
   let startX, startY;
   
   let side = floor(random(4));
@@ -780,7 +741,6 @@ function mousePressed() {
   
   arrows.push(new Arrow(startX, startY, mouseX, mouseY));
   
-  // 鼠标点击时产生轻微冲击波效果
   for (let particle of textParticles) {
     let d = dist(particle.x, particle.y, mouseX, mouseY);
     if (d < 50) {
@@ -791,7 +751,6 @@ function mousePressed() {
     }
   }
   
-  // 点击时在星星周围产生粒子效果
   for (let i = 0; i < 8; i++) {
     interactionManager.particles.push({
       x: mouseX + random(-15, 15),
@@ -824,7 +783,6 @@ function keyPressed() {
     arrowHitEffects = [];
   }
   
-  // 按A键测试箭矢效果
   if (key === 'a' || key === 'A') {
     let startX = random(width);
     let startY = random(height);
@@ -833,17 +791,14 @@ function keyPressed() {
     arrows.push(new Arrow(startX, startY, targetX, targetY));
   }
   
-  // 按M键切换音乐播放/暂停
   if (key === 'm' || key === 'M') {
     musicManager.toggle();
   }
   
-  // 按+键增加音量
   if (key === '+' || key === '=') {
     musicManager.setVolume(musicManager.volume + 0.1);
   }
   
-  // 按-键减少音量
   if (key === '-' || key === '_') {
     musicManager.setVolume(musicManager.volume - 0.1);
   }
